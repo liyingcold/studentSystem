@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.dao.UserMapper">
+    <resultMap id="userMap" type="com.ly.pojo.User">
+        <id property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="password" column="password" />
+        <result property="sex" column="sex" typeHandler="com.ly.util.SexEnumTypeHandler"  jdbcType="INTEGER"/>
+        <result property="mobile" column="mobile" />
+        <result property="tel" column="tel"  />
+        <result property="email" column="email" />
+        <result property="note" column="note" />
+        <!--与用户信息表，一对一级联-->
+        <!--<association property="userInfo" column="user_id" fetchType="lazy" select="com.ly.dao.UserInfoMapper.selectByPrimaryKey"/>-->
+        <!--与角色role表，一对多级联-->
+        <!--<collection property="roleList" column="id" fetchType="lazy" select="com.ly.dao.RoleMapper.selectByPrimaryKey"/>-->
+        <!--鉴别器-->
+        <!--<discriminator javaType="int" column="sex">-->
+            <!--<case value="1" resultMap="maleHealthMap"/>-->
+            <!--<case value="0" resultMap="femaleHealthMap"/>-->
+        <!--</discriminator>-->
+    </resultMap>
+    <!--<resultMap id="femaleHealthMap" type="com.ly.pojo.FemaleHealth" extends="userMap">-->
+        <!--<association property="userId" column="user_id" select="com.ly.dao.FemaleHealthMapper.selectByPrimaryKey"/>-->
+    <!--</resultMap>-->
+    <!--<resultMap id="maleHealthMap" type="com.ly.pojo.MaleHealth" extends="userMap">-->
+        <!--<association property="userId" column="user_id" select="com.ly.dao.MaleHealthMapper.selectByPrimaryKey"/>-->
+    <!--</resultMap>-->
+
+    <!--User selectByPrimaryKey(Long id);-->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="userMap">
+        select id, user_name, password, sex, mobile, tel, email, note
+        from t_user
+        where id={#id}
+    </select>
+    <!--//    用户登录-->
+    <!--User selectLogin(@Param("username")String userName, @Param("password")String password);-->
+    <select id="selectLogin"  parameterType="map"  resultMap="userMap">
+        select
+       id, user_name, password, sex, mobile, tel, email, note
+        from t_user
+        where user_name=#{username}
+        and password=#{password}
+    </select>
+    <!--//注册-->
+    <insert id="insert" parameterType="com.ly.pojo.User" >
+    insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="password != null" >
+                password,
+            </if>
+            <if test="sex != null" >
+                sex,
+            </if>
+            <if test="mobile != null" >
+                mobile,
+            </if>
+            <if test="tel != null" >
+                tel,
+            </if>
+            <if test="email != null" >
+                email,
+            </if>
+            <if test="note != null" >
+                note,
+            </if>
+        </trim>
+
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="userName != null">
+                #{userName},
+            </if>
+            <if test="password != null">
+                #{password},
+            </if>
+            <if test="sex != null">
+                #{sex,typeHandler=com.ly.util.SexEnumTypeHandler,jdbcType=INTEGER},
+            </if>
+            <if test="mobile != null">
+                #{mobile},
+            </if>
+            <if test="tel != null">
+                #{tel},
+            </if>
+            <if test="email != null">
+                #{email},
+            </if>
+            <if test="note != null">
+                #{note},
+            </if>
+        </trim>
+  </insert>
+    <!--查询所有-->
+    <select id="selectAll" resultMap="userMap">
+        select id, user_name, password, sex, mobile, tel, email, note
+        from t_user
+    </select>
+</mapper>

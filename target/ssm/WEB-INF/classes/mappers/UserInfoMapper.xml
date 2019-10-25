@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.dao.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ly.pojo.UserInfo" >
+      <id property="id" column="id" jdbcType="INTEGER" javaType="java.lang.Long" />
+      <result property="userId" column="user_id" jdbcType="INTEGER" javaType="java.lang.Long" />
+      <result property="note" column="note" jdbcType="VARCHAR" javaType="java.lang.String" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ly.pojo.UserInfo" >
+      <id property="id" column="id" jdbcType="INTEGER" javaType="java.lang.Long" />
+      <result property="userId" column="user_id" jdbcType="INTEGER" javaType="java.lang.Long" />
+      <result property="note" column="note" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <result property="headImage" column="head_image" jdbcType="LONGVARBINARY" javaType="_byte[]" />
+  </resultMap>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    id, user_id, note,head_image
+    from t_user_info
+    where user_id = #{id,jdbcType=INTEGER}
+  </select>
+
+</mapper>

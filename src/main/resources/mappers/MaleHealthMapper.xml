@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.dao.MaleHealthMapper" >
+  <resultMap id="BaseResultMap" type="com.ly.pojo.MaleHealth" >
+      <id property="id" column="id" jdbcType="INTEGER" javaType="java.lang.Long" />
+      <result property="userId" column="user_id" />
+      <result property="heart" column="heart" />
+      <result property="liver" column="liver"  />
+      <result property="spleen" column="spleen" />
+      <result property="lung" column="lung"/>
+      <result property="kidney" column="kidney" />
+      <result property="prostate" column="prostate"  />
+      <result property="checkDate" column="check_date" />
+      <result property="note" column="note"/>
+  </resultMap>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    id, user_id, heart, liver, spleen, lung, kidney, prostate, check_date, note
+    from t_male_health
+    where user_id = #{id}
+  </select>
+
+
+</mapper>

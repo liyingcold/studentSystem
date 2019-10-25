@@ -1,0 +1,33 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task.xsd">
+<!--扫描service层和dao层注解（spring中扫描service，然后再在SpringMVC中扫描controller中扫描controller）-->
+
+    <!--启用spring的一些annotation  主要包括@Autowired,@Resource\@PostConstruct\@PreDestroy、@PersistenceContext、@Required-->
+    <!--<context:annotation-config/>-->
+    <!--设置使用注解的类所在的包 主要是dao层和service层，剔除controller层注解扫描
+        扫描service和dao包里面的类，只要有@Service或者@Repository就注册成spring容器中的bean，下次可以通过@Autowired直接注入-->
+    <context:component-scan base-package="com.ly">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--<context:property-placeholder location="datasource.properties"/>-->
+
+    <!--引入spring-mybatis-->
+    <import resource="spring-mybatis.xml"/>
+
+
+</beans>
