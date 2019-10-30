@@ -1,8 +1,10 @@
 package com.ly.pojo;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Role {
+public class Role implements Serializable {
+    private static final long serialVersionUID = -1845697056786684662L;
     private Long id;
 
     private String roleName;
